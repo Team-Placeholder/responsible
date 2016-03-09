@@ -10,4 +10,4 @@ export function UserImage({ avatar, imageType }) {
     }
     </div>
   );
-};
+}
