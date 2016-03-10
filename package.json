@@ -31,6 +31,7 @@
     "react-router-redux": "^4.0.0",
     "reactify": "^1.1.1",
     "redux": "^3.3.1",
+    "redux-immutable": "^3.0.6",
     "socket.io": "^1.4.5",
     "sqlite3": "^3.1.1",
     "supertest": "^1.2.0",

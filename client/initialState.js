@@ -1,4 +1,4 @@
-export default const dummyState = {
+export default {
   user: {
     id: 1,
     avatar: 'https://i.ytimg.com/vi/1v6M41Divso/maxresdefault.jpg',
