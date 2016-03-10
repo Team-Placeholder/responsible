@@ -1,14 +1,15 @@
 
 export function requestPair() {
-  // do we dispatch the pair request here?
+  // initiate a server request for pair.
+  // using thunk middleware
   return {
-    type: 'REQUEST_PAIR',
+    type: 'REQUEST_MATCH',
   };
 };
 
-export function receivePair(userId) {
+export function receivePair(userObj) {
   return {
-    type: 'RECEIVE_PAIR',
-    entry: userId,
+    type: 'RECEIVE_MATCH',
+    entry: userObj,
   };
 };

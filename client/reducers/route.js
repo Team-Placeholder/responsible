@@ -7,7 +7,7 @@ const initialState = Immutable.fromJS({
   locationBeforeTransitions: null,
 });
 
-export function routeReducer(state = initialState, action) {
+export default function routeReducer(state = initialState, action) {
   console.log('router state!:', state);
   if (action.type === LOCATION_CHANGE) {
     return state.merge({

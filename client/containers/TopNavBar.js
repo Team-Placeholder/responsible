@@ -7,7 +7,7 @@ import { Logo } from '../components/Logo';
 import { TopNavBarRightButton } from '../components/TopNavBarRightButton';
 
 import * as userAction from '../actionCreators/user';
-import * as viewAction from '../actionCreators/view';
+import * as rideAction from '../actionCreators/ride';
 
 require('../public/styles/normalize.css');
 require('../public/styles/skeleton.css');
@@ -36,15 +36,14 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch) {
   return {
     onSettingsButtonClick() {
-      dispatch(viewAction.displaySettings(true));
-    },
-    onMiddleButtonClick(type) {
-      // type needs to be the name of a function exported by viewAction
-      console.log('clicking middle button of type:', type);
-      dispatch(viewAction[type](true));
+
+      // import push from react-redux-router
+      // dispatch(viewAction.displaySettings(true));
     },
     onProfileButtonClick() {
-      dispatch(viewAction.displayProfile(true));
+
+      // import push from react-redux-router
+      // dispatch(viewAction.displayProfile(true));
     }
   };
 };

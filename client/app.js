@@ -14,8 +14,9 @@ import Root from './containers/Root';
 import { ProfileContainer } from './containers/Profile';
 import { MainContainer } from './containers/Main';
 
-import { routeReducer } from './reducers/route';
-import reducers from './reducers/reducers';
+import routeReducer from './reducers/route';
+import userReducer from './reducers/user';
+import rideReducer from './reducers/ride';
 
 import InitialState from './initialState';
 
@@ -26,7 +27,8 @@ const routes = <Route component={Root}>
 </Route>;
 
 const reducersWithRouter = combineReducers({
-  ...reducers,
+  user: userReducer,
+  ride: rideReducer,
   routing: routeReducer,
 });
 
