@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
-import 
 import { createStore } from 'redux';
+
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { routerReducer } from './reducers/routerReducer';
+
 import { fromJS } from 'immutable';
+import { combineReducers } from 'redux-immutable';
 
 import Root from './containers/Root';
 import { ProfileContainer } from './containers/Profile';
@@ -24,7 +29,7 @@ const dummyState = {
   friends: [
     {
       id: 2,
-      avatar: 'http://www.spirit-animals.com/wp-content/uploads/2012/09/Dolphin.jpg',
+      avatar: 'http://spirit-animals.com/wp-content/uploads/2012/09/Dolphin.jpg',
       fullName: 'Flipp',
     },
     {
@@ -84,7 +89,6 @@ const dummyState = {
   displayMatchInfo: false,
 };
 
-
 // Update /profile to /profile/:userId when ready. react-router.
 const routes = <Route component={Root}>
   <Route path="/" component={MainContainer} />
@@ -97,7 +101,6 @@ const reducersWithRouter = combineReducers({
 });
 
 const store = createStore(reducersWithRouter, fromJS(dummyState));
-
 const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
