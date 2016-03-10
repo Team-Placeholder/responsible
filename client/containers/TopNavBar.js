@@ -18,7 +18,6 @@ export class TopNavBar extends React.Component {
   }
 
   render() {
-    console.log('rendering topnavbar with state:', this.props);
     return (
       <div className="TopNavBarContainer row">
         <SettingIcon />

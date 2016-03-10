@@ -11,6 +11,7 @@
   "license": "ISC",
   "homepage": "https://github.com/scriptinvaders/responsible#readme",
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "bluebird": "^3.3.4",
     "body-parser": "^1.15.0",
     "browserify-middleware": "^7.0.0",
