@@ -29,6 +29,8 @@ export class TopNavBar extends React.Component {
 };
 
 const mapStateToProps = function (state) {
+  console.log('TopNavBar state to props state:', state.toJS());
+
   return state.toJS();
 };
 
