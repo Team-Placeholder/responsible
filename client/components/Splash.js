@@ -2,13 +2,19 @@ import { DriveButton } from './DriveButton';
 import { CatchARideButton } from './CatchARideButton';
 import * as userAction from '../actionCreators/user';
 
-export function Splash({ onDriveButtonClick, onRideButtonClick }) {
-  return (
-    <div className='splash'>
-      <DriveButton onDriveButtonClick={onDriveButtonClick} />
-      <CatchARideButton onCatchARideButtonClick={onRideButtonClick} />
-    </div>
-  );
+class Splash extends React.Component {
+  constructor() {
+    super();
+  }
+
+  render() {
+    return (
+      <div className='splash'>
+        <DriveButton {...this.props} />
+        <CatchARideButton {...this.props} />
+      </div>
+    );
+  };
 };
 
 // jscs:disable

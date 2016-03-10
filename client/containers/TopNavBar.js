@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 // import { TopNavBarMiddleButton } from '../components/TopNavBarMiddleButton';
@@ -12,7 +11,7 @@ import * as rideAction from '../actionCreators/ride';
 require('../public/styles/normalize.css');
 require('../public/styles/skeleton.css');
 
-export class TopNavBar extends React.Component {
+class TopNavBar extends React.Component {
   constructor() {
     super();
   }
