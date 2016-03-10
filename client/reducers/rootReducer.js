@@ -1,5 +1,5 @@
 import childReducer from './childReducer';
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 
 export default childReducer;
 
