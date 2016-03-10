@@ -32,8 +32,8 @@ const reducersWithRouter = combineReducers({
 const historyMiddleware = routerMiddleware(browserHistory);
 const store = createStore(
   reducersWithRouter,
-  applyMiddleware(historyMiddleware),
-  fromJS(InitialState)
+  fromJS(InitialState),
+  applyMiddleware(historyMiddleware)
 );
 
 const history = syncHistoryWithStore(browserHistory, store, {
