@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from 'redux';
 
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import { routeReducer } from './reducers/routeReducer';
 
 import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
@@ -14,7 +13,9 @@ import { combineReducers } from 'redux-immutable';
 import Root from './containers/Root';
 import { ProfileContainer } from './containers/Profile';
 import { MainContainer } from './containers/Main';
-import rootReducer from './reducers/rootReducer';
+
+import { routeReducer } from './reducers/route';
+import reducers from './reducers/reducers';
 
 import InitialState from './initialState';
 
@@ -25,7 +26,7 @@ const routes = <Route component={Root}>
 </Route>;
 
 const reducersWithRouter = combineReducers({
-  rootReducer,
+  ...reducers,
   routing: routeReducer,
 });
 
