@@ -22,7 +22,7 @@ export class TopNavBar extends React.Component {
       <div className="TopNavBarContainer row">
         <SettingIcon />
         <Logo />
-        <TopNavBarRightButton {...this.props} />
+        <TopNavBarRightButton {...this.props.ride} />
       </div>
     );
   }

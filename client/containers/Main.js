@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { TopNavBarContainer } from './TopNavBar';
-import { Splash } from '../components/Splash';
+import { SplashContainer } from '../components/Splash';
 
 // import { Map } from './googleMapComponent';
 // import {BottomBarContainer } from './BottomBar';
@@ -12,7 +12,7 @@ function Main({ isDriver, isRider }) {
       <TopNavBarContainer />
       {
         !isDriver && !isRider ?
-          <Splash /> :
+          <SplashContainer /> :
           (<h2>Hey - No splashing!</h2>)
       }
     </div>
