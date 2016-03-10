@@ -1,6 +1,6 @@
 /**
  *  Top-most React component.
- *  Render simply renders its children.
+ *  Simply renders its children.
  *
 **/
 export default React.createClass({

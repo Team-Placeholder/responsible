@@ -28,6 +28,7 @@
     "ramda": "^0.19.1",
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0",
+    "react-router-redux": "^4.0.0",
     "reactify": "^1.1.1",
     "redux": "^3.3.1",
     "socket.io": "^1.4.5",

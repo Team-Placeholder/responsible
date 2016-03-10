@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
+import 
 import { createStore } from 'redux';
 import { fromJS } from 'immutable';
 
@@ -83,24 +84,25 @@ const dummyState = {
   displayMatchInfo: false,
 };
 
-const store = createStore(rootReducer, fromJS(dummyState));
 
-/**
- *  Containers can be placed in routers:
- *   <Route path="/" component={TopNavBarContainer} >
- *     <Header />
- *   </Route>
-**/
-
-// Update /profile to /profile/:userId when ready. react-router.Link helps with this.
+// Update /profile to /profile/:userId when ready. react-router.
 const routes = <Route component={Root}>
   <Route path="/" component={MainContainer} />
   <Route path="/profile" component={ProfileContainer} />
 </Route>;
 
+const reducersWithRouter = combineReducers({
+  rootReducer,
+  routing: routerReducer,
+});
+
+const store = createStore(reducersWithRouter, fromJS(dummyState));
+
+const history = syncHistoryWithStore(browserHistory, store);
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>{routes}</Router>
+    <Router history={history}>{routes}</Router>
   </Provider>,
   document.getElementById('app')
 );
