@@ -20,6 +20,8 @@ function Main({ isDriver, isRider }) {
 };
 
 const mapStateToProps = function (state) {
+  console.log('main container mapStateToProps state:', state.toJS());
+
   let stateJS = state.toJS();
   return {
     isRider: stateJS.isRider,
