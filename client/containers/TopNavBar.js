@@ -1,24 +1,22 @@
-import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-// import { TopNavBarMiddleButton } from '../components/TopNavBarMiddleButton';
 import { SettingIcon } from '../components/SettingIcon';
 import { Logo } from '../components/Logo';
 import { TopNavBarRightButton } from '../components/TopNavBarRightButton';
 
 import * as userAction from '../actionCreators/user';
-import * as viewAction from '../actionCreators/view';
+import * as rideAction from '../actionCreators/ride';
 
 require('../public/styles/normalize.css');
 require('../public/styles/skeleton.css');
 
-export class TopNavBar extends React.Component {
+class TopNavBar extends React.Component {
   constructor() {
     super();
   }
 
   render() {
-    console.log('rendering topnavbar with state:', this.props);
     return (
       <div className="TopNavBarContainer row">
         <SettingIcon />
@@ -30,6 +28,8 @@ export class TopNavBar extends React.Component {
 };
 
 const mapStateToProps = function (state) {
+  console.log('TopNavBar state to props state:', state.toJS());
+
   return state.toJS();
 };
 
@@ -37,15 +37,12 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch) {
   return {
     onSettingsButtonClick() {
-      dispatch(viewAction.displaySettings(true));
-    },
-    onMiddleButtonClick(type) {
-      // type needs to be the name of a function exported by viewAction
-      console.log('clicking middle button of type:', type);
-      dispatch(viewAction[type](true));
+
+      // import push from react-redux-router
+      // dispatch(viewAction.displaySettings(true));
     },
     onProfileButtonClick() {
-      dispatch(viewAction.displayProfile(true));
+      dispatch(push('/profile'))
     }
   };
 };

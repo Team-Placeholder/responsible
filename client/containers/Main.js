@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { TopNavBarContainer } from './TopNavBar';
-import { Splash } from '../components/Splash';
+import { SplashContainer } from '../components/Splash';
 
 // import { Map } from './googleMapComponent';
 // import {BottomBarContainer } from './BottomBar';
@@ -12,7 +12,7 @@ function Main({ isDriver, isRider }) {
       <TopNavBarContainer />
       {
         !isDriver && !isRider ?
-          <Splash /> :
+          <SplashContainer /> :
           (<h2>Hey - No splashing!</h2>)
       }
     </div>
@@ -20,10 +20,12 @@ function Main({ isDriver, isRider }) {
 };
 
 const mapStateToProps = function (state) {
-  let stateJS = state.toJS();
+  // console.log('main container mapStateToProps state:', state.toJS());
+
+  let userState = state.toJS().user;
   return {
-    isRider: stateJS.isRider,
-    isDriver: stateJS.isDriver,
+    isRider: userState.isRider,
+    isDriver: userState.isDriver,
   };
 };
 
