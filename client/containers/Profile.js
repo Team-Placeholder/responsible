@@ -17,6 +17,7 @@ export class Profile extends React.Component {
   };
 
   render() {
+    console.log('attempting to render Profile.js');
     return (
       <div className="ProfileContainer">
         <UserImage {...this.user} imageType="portrait" />

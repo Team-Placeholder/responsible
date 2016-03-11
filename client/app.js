@@ -20,7 +20,6 @@ import rideReducer from './reducers/ride';
 
 import InitialState from './initialState';
 
-// Update /profile to /profile/:userId when ready. react-router.
 const routes = <Route component={Root}>
   <Route path="/" component={MainContainer} />
   <Route path="/profile" component={ProfileContainer} />

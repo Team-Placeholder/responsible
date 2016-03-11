@@ -54,4 +54,7 @@ export default {
     isConfirmed: false,
     match: null,
   },
+  routing: {
+    locationBeforeTransitions: null,
+  },
 };
