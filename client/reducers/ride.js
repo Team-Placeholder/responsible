@@ -1,8 +1,6 @@
 import { Map } from 'immutable';
 
 export default function(state = Map(), action) {
-  console.log('reducing ride state:', state.toJS());
-
   switch (action.type) {
     case 'RECEIVE_MATCH':
       return receiveMatch(state, action);

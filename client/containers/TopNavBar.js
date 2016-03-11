@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-// import { TopNavBarMiddleButton } from '../components/TopNavBarMiddleButton';
 import { SettingIcon } from '../components/SettingIcon';
 import { Logo } from '../components/Logo';
 import { TopNavBarRightButton } from '../components/TopNavBarRightButton';
@@ -21,7 +21,7 @@ class TopNavBar extends React.Component {
       <div className="TopNavBarContainer row">
         <SettingIcon />
         <Logo />
-        <TopNavBarRightButton {...this.props.ride} />
+        <TopNavBarRightButton {...this.props} />
       </div>
     );
   }
@@ -42,9 +42,7 @@ const mapDispatchToProps = function (dispatch) {
       // dispatch(viewAction.displaySettings(true));
     },
     onProfileButtonClick() {
-
-      // import push from react-redux-router
-      // dispatch(viewAction.displayProfile(true));
+      dispatch(push('/profile'))
     }
   };
 };

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { push } from 'react-redux-router';
 
 import { DriveButton } from './DriveButton';
 import { CatchARideButton } from './CatchARideButton';
@@ -11,7 +10,6 @@ class Splash extends React.Component {
   }
 
   render() {
-    console.log('splash container props:', this.props);
     return (
       <div className='splash'>
         <DriveButton {...this.props} />
@@ -23,7 +21,6 @@ class Splash extends React.Component {
 
 // jscs:disable
 const mapDispatchToProps = function(dispatch) {
-  console.log('is this state?', dispatch);
   return {
     onDriveButtonClick() {
       dispatch(userAction.setDriver(true));
