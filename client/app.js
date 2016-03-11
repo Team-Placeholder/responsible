@@ -40,7 +40,7 @@ const store = createStore(
 
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState(state) {
-    return state.get('routing');
+    return state.get('routing').toJS();
   },
 });
 
