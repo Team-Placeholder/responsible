@@ -23,8 +23,7 @@ Ride.createRide = function (attrs) {
   return db('rides').insert(attrs, ['ride_id', 'ride_driver', 'ride_rider'])
     .catch(reportError('error creating ride in db'))
     .then(function (ride) {
-      Ride.deleteRiderAndDriver(attrs.rider_id, attrs.driver_id)
-        .catch(reportError('error deleting rider and driver'));
+      Ride.deleteRiderAndDriver(attrs.ride_rider, attrs.ride_driver);
       return ride;
     });
 };
@@ -48,7 +47,7 @@ Ride.getRideById = function (id) {
 
 // Get all riders ids. returns array
 Ride.getRidersIds = function () {
-  return db.select('*').from('rider')
+  return db.select('*').from('riders')
     .catch(reportError('error getting all riders'))
     .then(function (riders) {
       return riders.map(rider => rider.rider_id);
@@ -57,21 +56,21 @@ Ride.getRidersIds = function () {
 
 // Get a rider by ID
 Ride.getRiderById = function (userId) {
-  return db.select('*').from('rider').where({ foreign_rider: userId })
+  return db.select('*').from('riders').where({ foreign_rider: userId })
     .catch(reportError('error retrieving rider by userId'))
     .then(first);
 };
 
 // Create a rider
 Ride.createRider = function (attrs) {
-  return db('rider').insert(attrs, ['rider_id', 'foreign_rider', 'location'])
+  return db('riders').insert(attrs, ['rider_id', 'foreign_rider', 'location'])
     .catch(reportError('error creating ride in db'))
     .then(rider => rider);
 };
 
 // Deletes rider by id
 Ride.deleteRider = function (id) {
-  return db('rider').where({ rider_id: id }).del()
+  return db('riders').where({ rider_id: id }).del()
     .catch(reportError('error deleting rider by id'))
     .then(rider => console.log('deleted rider with id ' + id));
 };
@@ -82,7 +81,7 @@ Ride.deleteRider = function (id) {
 
 // Get all drivers, returns array of their ids
 Ride.getDrivers = function () {
-  return db.select('*').from('driver')
+  return db.select('*').from('drivers')
     .catch(reportError('error getting all drivers'))
     .then(function (drivers) {
       return drivers.map(driver => driver.driver_id);
@@ -91,21 +90,20 @@ Ride.getDrivers = function () {
 
 // Get driver by ID
 Ride.getDriverById = function (userId) {
-  return db.select('*').from('driver').where({ foreign_driver: userId })
+  return db.select('*').from('drivers').where({ foreign_driver: userId })
     .catch(reportError('error retrieving driver by userId'))
     .then(first);
 };
 
 // Create a new driver
 Ride.createDriver = function (attrs) {
-  return db('driver').insert(attrs, ['driver_id', 'foreign_driver', 'location'])
+  return db('drivers').insert(attrs, ['driver_id', 'foreign_driver', 'location'])
     .catch(reportError('error creating driver in db'))
-    .then(driver => driver);
 };
 
 // Deletes driver
 Ride.deleteDriver = function (id) {
-  return db('driver').where({ driver_id: id }).del()
+  return db('drivers').where({ driver_id: id }).del()
     .catch(reportError('error deleting driver by id'))
     .then(driver => console.log('deleted driver with id ' + id));
 };

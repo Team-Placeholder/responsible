@@ -24,6 +24,13 @@ RideAPI.post('/', function (req, res) {
     .catch(sendStatusAndError(res, 500, ('error creating user')));
 });
 
+RideAPI.get('/:id', function (req, res) {
+  var id = req.params.id;
+  Ride.getRideById(id)
+    .then(sendStatusAndData(res, 200))
+    .catch(sendStatusAndError(res, 500));
+});
+
 // Delete ride by id
 RideAPI.delete('/:id', function (req, res) {
   var id = req.params.id;
@@ -37,14 +44,14 @@ RideAPI.delete('/:id', function (req, res) {
 */
 
 // Get All Riders
-RideAPI.get('/rider', function (req, res) {
+RideAPI.get('/riders', function (req, res) {
   Ride.getRiders()
     .then(sendStatusAndData(res, 201))
     .catch(sendStatusAndError(res, 500, ('error creating rider')));
 });
 
 // Get Rider By Id
-RideAPI.get('/rider/:id', function (req, res) {
+RideAPI.get('/riders/:id', function (req, res) {
   var id = req.params.id;
   Ride.getRiderById(id)
     .then(sendStatusAndData(res, 200))
@@ -52,7 +59,7 @@ RideAPI.get('/rider/:id', function (req, res) {
 });
 
 // Post Rider
-RideAPI.post('/rider', function (req, res) {
+RideAPI.post('/riders', function (req, res) {
   var attrs = req.body;
   Ride.createRider(attrs)
     .then(sendStatusAndData(res, 201))
@@ -64,14 +71,14 @@ RideAPI.post('/rider', function (req, res) {
 */
 
 // Get All Drivers
-RideAPI.get('/driver', function (req, res) {
+RideAPI.get('/drivers', function (req, res) {
   Ride.getDrivers()
     .then(sendStatusAndData(res, 201))
     .catch(sendStatusAndError(res, 500, 'error retrieving drivers'));
 });
 
 // Get driver by id
-RideAPI.get('/driver/' + id, function (req, res) {
+RideAPI.get('/drivers/:id', function (req, res) {
   var id = req.params.id;
   Ride.getDriverById(id)
     .then(sendStatusAndData(res, 200))
@@ -79,8 +86,8 @@ RideAPI.get('/driver/' + id, function (req, res) {
 });
 
 // Post Driver
-RideAPI.post('/driver', function (req, res) {
-  var attrs = req.params;
+RideAPI.post('/drivers', function (req, res) {
+  var attrs = req.body;
   Ride.createDriver(attrs)
     .then(sendStatusAndData(res, 201))
     .catch(sendStatusAndError(res, 500, 'error creating driver'));

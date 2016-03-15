@@ -14,16 +14,16 @@ MessageAPI.get('/', function (req, res) {
     .catch(sendStatusAndError(res, 500, 'Server error getting all messages'));
 });
 
-//Get Message between two users
+//Get Message by ride_id
 MessageAPI.get('/:ride_id', function (req, res) {
-  var id = req.params.ride_id;
-  Message.getMessagesByRideId(id)
+  var rideId = req.params.ride_id;
+  Message.getMessagesByRideId(rideId)
     .then(sendStatusAndData(res, 200))
     .catch(sendStatusAndError(res, 500, 'Server error getting message'));
 });
 
-// Create chatroom between driver and rider
-MessageAPI.post('/', function (req, res) {
+// Create message between driver and rider
+MessageAPI.post('/:ride_id', function (req, res) {
   var attrs = req.body;
   Message.createMessage(attrs)
     .then(sendStatusAndData(res, 201))
