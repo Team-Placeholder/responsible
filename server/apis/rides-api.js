@@ -3,16 +3,11 @@ var RideAPI = require('express').Router();
 
 var io = require('../lib/ioConfig').io;
 if (process.env.NODE_ENV === 'test') {
-  // jscs: disable
-  // might as well disable any other code style checking, too, this is hacky enough
   var MockedSocketIO = {};
   MockedSocketIO.sockets = [];
-  MockedSocketIO.to = function () {};
-  MockedSocketIO.emitTo = function () {};
-  MockedSocketIO.to.emit = function () {};
+  MockedSocketIO.sockets.emit = function () {};
 
   io = MockedSocketIO;
-  // jscs: enable
 }
 
 var Ride = require(__models + '/rides');
@@ -25,6 +20,15 @@ module.exports = RideAPI;
 * Rides routes
 */
 
+//Get all rides
+RideAPI.get('/', function (req, res) {
+  // io.sockets.emit('receive_message', { id: 9, text: 'gassy', time: '22:50' });
+
+  Ride.getRides()
+    .then(sendStatusAndData(res, 200))
+    .catch(sendStatusAndError(res, 500, ('error getting rides')));
+});
+
 //Posting
 RideAPI.post('/', function (req, res) {
   var ride = req.body;
@@ -33,44 +37,58 @@ RideAPI.post('/', function (req, res) {
     .catch(sendStatusAndError(res, 500, ('error creating user')));
 });
 
+RideAPI.get('/:id', function (req, res) {
+  var id = req.params.id;
+  Ride.getRideById(id)
+    .then(sendStatusAndData(res, 200))
+    .catch(sendStatusAndError(res, 500));
+});
+
 /*
   Removes a ride or rider from the database.
 
   Effectively ends an ongoing ride or cancel a request for a ride.
 
   expects req.body:
-    { user_id (current user) }
+    { userId }
         OR
-    { user_id (partner to inform of cancellation), ride_id }
+    { userId (which partner is canceling), rideId }
   depending on whether it is a ride in progress of just a request for one.
 */
 RideAPI.delete('/', function (req, res) {
   console.log('removing ride(r) by id:', req.body);
-  var user_id = req.body.user_id;
-  var ride_id = req.body.ride_id;
 
   var rideExists = false;
-  if (ride_id) rideExists = true;
+  if (req.body.rideId) rideExists = true;
 
   if (rideExists) {
-    Ride.deleteRide(ride_id)
+    Ride.deleteRide(req.body.rideId)
+      .then(sendStatus(res, 200))
+      .catch(sendStatusAndError(res, 500));
 
-      // user_id is the cancelling user's partner's user_id
-      .then(() => io.to(user_id).emit('cancel_ride', null))
-      .then(sendStatus(res, 200))
-      .catch(sendStatusAndError(res, 500));
+    // emit to only the appropriate other party
+    //   hint: emit to ride partner of rideId (knowing who canceled)
+    io.sockets.emit('cancel_ride', req.body);
   } else {
-    Ride.deleteRider(user_id)
-      .then(Friends.getFriendDrivers.bind(null, user_id))
-      .then((drivingFriends) => io.emitTo(drivingFriends, 'remove_rider', user_id))
+    Ride.deleteRider(req.body.userId)
       .then(sendStatus(res, 200))
       .catch(sendStatusAndError(res, 500));
+
+    // no rides in progress -- emit to friends of rider.
+    io.sockets.emit('remove_rider', req.body);
   }
 });
 
 /*
 * Rider routes
 */
+
+// Get All Riders
+RideAPI.get('/riders', function (req, res) {
+  Ride.getRiders()
+    .then(sendStatusAndData(res, 201))
+    .catch(sendStatusAndError(res, 500, ('error creating rider')));
+});
 
 // expects req.body: { userId, location }
 // response: { }
@@ -86,6 +104,7 @@ RideAPI.post('/riders', function (req, res) {
 
   Ride.createRider(riderToInsert)
     .then(function (newRider) {
+      // location = newRider[0].location;
       return User.findUserById(newRider[0].foreign_rider);
     })
     .then(function (user) {
@@ -105,6 +124,21 @@ RideAPI.post('/riders', function (req, res) {
 * Driver routes
 */
 
+// Get All Drivers
+RideAPI.get('/drivers', function (req, res) {
+  Ride.getDrivers()
+    .then(sendStatusAndData(res, 201))
+    .catch(sendStatusAndError(res, 500, 'error retrieving drivers'));
+});
+
+// Get driver by id
+RideAPI.get('/drivers/:id', function (req, res) {
+  var id = req.params.id;
+  Ride.getDriverById(id)
+    .then(sendStatusAndData(res, 200))
+    .catch(sendStatusAndError(res, 500));
+});
+
 // Post Driver
 RideAPI.post('/drivers', function (req, res) {
   var attrs = req.body;
@@ -121,3 +155,15 @@ RideAPI.delete('/drivers', function (req, res) {
     .then(sendStatusAndData(res, 201))
     .catch(sendStatusAndError(res, 500, 'error deleting driver'));
 });
+
+/*
+* Sockets
+*/
+
+// io.sockets.on('connection', function (socket) {
+//   socket.on('send message', function (data) {
+//     io.sockets.emit('new message', data);
+//   });
+//   socket.on('something else')
+// });
+

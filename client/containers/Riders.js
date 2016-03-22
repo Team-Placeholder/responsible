@@ -5,7 +5,6 @@ import { RiderItemList } from './RiderItemList';
 function nullFn(e) { console.log('you just clicked a rider ' + e.target.className); };
 
 function List({ riders }) {
-  console.log('These are riders', riders, RiderItemList);
   return (
     <div className="riderList">
       <RiderItemList riders={riders}/>

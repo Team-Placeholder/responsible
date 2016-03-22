@@ -58,14 +58,17 @@ export default {
     riders: [
       {
         user_id: 1,
+        foreign_rider: 12,
         location: { lat: 30.2687464, lng: -97.741185 },
       },
       {
         user_id: 2,
+        foreign_rider: 11,
         location: { lat: 30.267701, lng: -97.736303 },
       },
       {
         user_id: 3,
+        foreign_rider: 8,
         location:   { lat: 30.271188, lng: -97.7469099 },
       },
     ], // Array of this driver's friends who are looking for a ride.

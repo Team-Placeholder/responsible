@@ -19,6 +19,8 @@ function Button({ onSignoutButtonClick }) {
   );
 }
 
+// This functionality should probably live on the container
+
 const mapStateToProps = function (state) {
   return state.get('user').toJS();
 };
