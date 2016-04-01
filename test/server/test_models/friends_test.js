@@ -28,6 +28,11 @@ describe('Friends Models', function () {
     expect(friends).to.have.length(2);
   });
 
+  it_('Should tell if users are friends', function * () {
+    var test = yield Friend.usersAreFriends(SeedObj.user1Id.user_id, SeedObj.user3Id.user_id);
+    expect(test).to.equal(true);
+  });
+
   it_('Should get friend IDs', function * () {
     var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
     expect(friends[0]).to.equal(SeedObj.user3Id.user_id);
