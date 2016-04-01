@@ -15,20 +15,38 @@ describe('Friends Models', function () {
     SeedObj = yield* Seed.runner();
   });
 
-  it_('Should get friend IDs', function * () {
-    var friends = yield Friend.getFriendIds(SeedObj.user1Id[0].user_id);
-    expect(friends[0]).to.equal(SeedObj.user3Id[0].user_id);
-    expect(friends).to.be.an.instanceOf(Array);
+  it_('Should get friends Ids', function * () {
+    var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
+    expect(friends).to.be.instanceOf(Array);
+    expect(friends).to.have.length(1);
+  });
+
+  it_('Should create friendship', function * () {
+    var friend = yield Friend.createFriendship(SeedObj.user1Id.user_id, SeedObj.user2Id.user_id);
+    var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
+    expect(friends).to.be.instanceOf(Array);
+    expect(friends).to.have.length(2);
+  });
+
+  it_('Should tell if users are friends', function * () {
+    var test = yield Friend.usersAreFriends(SeedObj.user1Id.user_id, SeedObj.user3Id.user_id);
+    expect(test).to.equal(true);
+  });
+
+  it_('Should find and add friend', function * () {
+    var friend = yield Friend.findAndAddFriend(SeedObj.user1Id.user_id, 'GregB');
+    expect(friend.name).to.equal('Greg Brady');
+    expect(friend.username).to.equal('GregB');
   });
 
   it_('Should get drivers who are friends', function * () {
-    var drivers = yield Friend.getFriendDrivers(SeedObj.user1Id[0].user_id);
-    expect(drivers[0]).to.equal(SeedObj.user3Id[0].user_id);
+    var drivers = yield Friend.getFriendDrivers(SeedObj.user1Id.user_id);
+    expect(drivers[0]).to.equal(SeedObj.user3Id.user_id);
     expect(drivers).to.be.an.instanceOf(Array);
   });
 
   it_('Should get riders who are friends', function * () {
-    var riders = yield Friend.getFriendRiders(SeedObj.user3Id[0].user_id);
+    var riders = yield Friend.getFriendRiders(SeedObj.user3Id.user_id);
     expect(riders).to.have.length(1);
     expect(riders).to.be.an.instanceOf(Array);
   });

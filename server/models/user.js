@@ -72,6 +72,34 @@ User.findFriends = function (userId) {
     });
 };
 
+function LetterCapitalize(str) {
+  return str.split(' ').map(function (word, i) {
+    return word[0].toUpperCase() + word.substr(1);
+  }).join(' ');
+}
+
+User.createUser = function (attrs) {
+  if (attrs.name) attrs.name = LetterCapitalize(attrs.name);
+  if (attrs.username) attrs.username = LetterCapitalize(attrs.username);
+
+  return db('users')
+    .insert(attrs, ['user_id', 'name', 'username', 'email', 'avatar', 'address'])
+    .then(first)
+    .catch(reportError('error creating user into db'));
+};
+
+// username should probably just be name
+User.updateUser = function (userId, attrs) {
+  if (attrs.name) attrs.name = LetterCapitalize(attrs.name);
+  if (attrs.username) attrs.username = LetterCapitalize(attrs.username);
+
+  return db('users')
+    .where({ user_id: userId })
+    .update(attrs, ['user_id', 'username', 'email', 'avatar', 'address'])
+    .then(first)
+    .catch(reportError('error updating user by id:' + userId));
+};
+
 /**
  *  attrs is (all of the time?) an OAuth user object.
  *  We look in the DB for some unique property of this object
@@ -80,6 +108,7 @@ User.findFriends = function (userId) {
  *
  *  returns: the whole user object
 **/
+
 User.createOrUpdateUser = function (verifyBy, attrs) {
   // Check if user is found by unique info (such as github token)
   return User.findUserBy(verifyBy, attrs[verifyBy])
@@ -112,34 +141,6 @@ User.createOrUpdateUser = function (verifyBy, attrs) {
         });
     })
     .catch(reportError('ERROR doing something creating/updating user. investigate'));
-};
-
-function LetterCapitalize(str) {
-  return str.split(' ').map(function (word, i) {
-    return word[0].toUpperCase() + word.substr(1);
-  }).join(' ');
-}
-
-User.createUser = function (attrs) {
-  if (attrs.name) attrs.name = LetterCapitalize(attrs.name);
-  if (attrs.username) attrs.username = LetterCapitalize(attrs.username);
-
-  return db('users')
-    .insert(attrs, ['user_id', 'name', 'username', 'email', 'avatar', 'address'])
-    .then(first)
-    .catch(reportError('error creating user into db'));
-};
-
-// username should probably just be name
-User.updateUser = function (userId, attrs) {
-  if (attrs.name) attrs.name = LetterCapitalize(attrs.name);
-  if (attrs.username) attrs.username = LetterCapitalize(attrs.username);
-
-  return db('users')
-    .where({ user_id: userId })
-    .update(attrs, ['user_id', 'username', 'email', 'avatar', 'address'])
-    .then(first)
-    .catch(reportError('error updating user by id:' + userId));
 };
 
 //
