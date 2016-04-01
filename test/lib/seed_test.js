@@ -12,7 +12,7 @@ Seed.user1 = {
   username: 'Cheenus',
   password: 'abc123',
   name: 'don cheenus',
-  address: { lat: 30.263619, lng: -97.737909 },
+  address: JSON.stringify({ lat: 30.263619, lng: -97.737909 }),
   zipcode: 123456,
   phone_number: 1,
   email: 'doncheen@hotmail.com',
@@ -24,7 +24,7 @@ Seed.user2 = {
   username: 'GregB',
   password: '123abc',
   name: 'greg brady',
-  address: { lat: 30.2687464, lng: -97.741185 },
+  address: JSON.stringify({ lat: 30.2687464, lng: -97.741185 }),
   zipcode: 654321,
   phone_number: 2,
   email: 'gregb@hotmail.com',
@@ -36,7 +36,7 @@ Seed.user3 = {
   username: 'CharlieBrizzown',
   password: 'cheesePlease',
   name: 'charlie brizz',
-  address: { lat: 30.264753, lng: -97.745835 },
+  address: JSON.stringify({ lat: 30.264753, lng: -97.745835 }),
   zipcode: 73036,
   phone_number: '405-441-9910',
   email: 'charbrizz@hotmail.com',
@@ -48,7 +48,7 @@ Seed.user4 = {
   username: 'GumpDump(69)[420]weed',
   password: 'jennyFoundWaysToExpandHerMind',
   name: 'forest gump',
-  address: { lat: 31.271188, lng: -97.7469099 },
+  address: JSON.stringify({ lat: 31.271188, lng: -97.7469099 }),
   zipcode: 654321,
   phone_number: '710-420-6969',
   email: 'bubbaIsGone@hotmail.com',
@@ -97,22 +97,22 @@ Seed.runner = function * () {
 
   const rider1  = {
     foreign_rider: user1Id.user_id,
-    location: '700 E. 8th street Austin, Tx',
+    location: JSON.stringify({ lat: 30.263619, lng: -97.737909 }),
   };
   const rider2  = {
     foreign_rider: user2Id.user_id,
-    location: '1000 Freckle Face Weigh',
+    location: JSON.stringify({ lat: 30.263619, lng: -97.737909 }),
   };
   const riderId1 = yield Seed.makeRider(rider1);
   const riderId2 = yield Seed.makeRider(rider2);
 
   const driver1 = {
     foreign_driver: user3Id.user_id,
-    location: '1826 Niblick Way',
+    location: JSON.stringify({ lat: 30.263619, lng: -97.737909 }),
   };
   const driver2 = {
     foreign_driver: user4Id.user_id,
-    location: '100 Shark Lane',
+    location: JSON.stringify({ lat: 30.263619, lng: -97.737909 }),
   };
   const driverID1 = yield db('drivers').insert(driver1, 'driver_id');
   const driverID2 = yield db('drivers').insert(driver2, 'driver_id');
