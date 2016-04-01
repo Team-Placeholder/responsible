@@ -33,10 +33,10 @@ describe('Friends Models', function () {
     expect(test).to.equal(true);
   });
 
-  it_('Should get friend IDs', function * () {
-    var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
-    expect(friends[0]).to.equal(SeedObj.user3Id.user_id);
-    expect(friends).to.be.an.instanceOf(Array);
+  it_('Should find and add friend', function * () {
+    var friend = yield Friend.findAndAddFriend(SeedObj.user1Id.user_id, 'GregB');
+    expect(friend.name).to.equal('Greg Brady');
+    expect(friend.address).to.equal('700 Bunch Dr Bonobo, Africa');
   });
 
   it_('Should get drivers who are friends', function * () {
