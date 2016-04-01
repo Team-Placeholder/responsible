@@ -15,6 +15,19 @@ describe('Friends Models', function () {
     SeedObj = yield* Seed.runner();
   });
 
+  it_('Should get friends Ids', function * () {
+    var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
+    expect(friends).to.be.instanceOf(Array);
+    expect(friends).to.have.length(1);
+  });
+
+  it_('Should create friendship', function * () {
+    var friend = yield Friend.createFriendship(SeedObj.user1Id.user_id, SeedObj.user2Id.user_id);
+    var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
+    expect(friends).to.be.instanceOf(Array);
+    expect(friends).to.have.length(2);
+  });
+
   it_('Should get friend IDs', function * () {
     var friends = yield Friend.getFriendIds(SeedObj.user1Id.user_id);
     expect(friends[0]).to.equal(SeedObj.user3Id.user_id);
