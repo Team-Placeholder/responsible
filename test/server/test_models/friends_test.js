@@ -45,8 +45,9 @@ describe('Friends Models', function () {
     expect(drivers).to.be.an.instanceOf(Array);
   });
 
-  xit_('Should get riders who are friends', function * () {
+  it_('Should get riders who are friends', function * () {
     var riders = yield Friend.getFriendRiders(SeedObj.user3Id.user_id);
+    console.log('~_~_~', riders);
     expect(riders).to.have.length(1);
     expect(riders).to.be.an.instanceOf(Array);
   });
